@@ -13,7 +13,7 @@ set -e
 pip3 install pip --upgrade
 pip3 install -r /etc/odoo/requirements.txt
 
-# sed -i 's|raise werkzeug.exceptions.BadRequest(msg)|self.jsonrequest = {}|g' /usr/lib/python3/dist>
+# sed -i 's|raise werkzeug.exceptions.BadRequest(msg)|self.jsonrequest = {}|g' /usr/lib/python3/dist-packages/odoo/http.py
 
 DB_ARGS=()
 function check_config() {
@@ -38,7 +38,7 @@ case "$1" in
         else
             wait-for-psql.py ${DB_ARGS[@]} --timeout=30
             exec odoo "$@" "${DB_ARGS[@]}"
-            fi
+        fi
         ;;
     -*)
         wait-for-psql.py ${DB_ARGS[@]} --timeout=30
